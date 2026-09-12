@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09090b;
+  --surface-primary: #0f0f12;
+  --surface-secondary: #131316;
+  --surface-elevated: #18181b;
+
+  --border: #232326;
+  --border-subtle: #1b1b1f;
+
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-disabled: #52525b;
+
+  --amber-primary: #f5b800;
+  --amber-hover: #dfa500;
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-geist);
+  --font-serif: var(--font-fraunces);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-geist), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(245, 184, 0, 0.25);
+  color: #f4f4f5;
+}
+
+/* Linear-grade card surfaces & components */
+.card-surface {
+  background-color: #0f0f12;
+  border: 1px solid #232326;
+  border-radius: 12px;
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+.card-surface:hover {
+  border-color: #2e2e33;
+}
+
+.card-elevated {
+  background-color: #141417;
+  border: 1px solid #232326;
+  border-radius: 12px;
+}
+
+.input-surface {
+  background-color: #141417;
+  border: 1px solid #232326;
+  border-radius: 8px;
+  color: #f4f4f5;
+  transition: border-color 0.15s ease-out;
+}
+
+.input-surface:focus-within,
+.input-surface:focus {
+  border-color: rgba(245, 184, 0, 0.4);
+  outline: none;
+}
+
+/* Animations */
+@keyframes alert-slide {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-alert-entry {
+  animation: alert-slide 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pipeline-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-pipeline-pulse {
+  animation: pipeline-pulse 2s infinite ease-in-out;
+}
+
+/* ─── OBS Overlay Tier Animations ─────────────────────────── */
+
+/* Bronze (₹1-99): gentle slide up */
+@keyframes obs-bronze-enter {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.obs-bronze-enter {
+  animation: obs-bronze-enter 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+/* Silver (₹100-499): slide from right */
+@keyframes obs-silver-enter {
+  0%   { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.obs-silver-enter {
+  animation: obs-silver-enter 0.45s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+/* Gold (₹500-999): pop bounce with overshoot */
+@keyframes obs-gold-enter {
+  0%   { opacity: 0; transform: scale(0.7) translateY(16px); }
+  60%  { opacity: 1; transform: scale(1.06) translateY(-4px); }
+  80%  { transform: scale(0.97) translateY(2px); }
+  100% { transform: scale(1) translateY(0); }
+}
+.obs-gold-enter {
+  animation: obs-gold-enter 0.55s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+
+/* Diamond (₹1000+): dramatic slam-down from top */
+@keyframes obs-diamond-enter {
+  0%   { opacity: 0; transform: scale(1.3) translateY(-30px); }
+  50%  { opacity: 1; transform: scale(0.96) translateY(6px); }
+  75%  { transform: scale(1.03) translateY(-3px); }
+  100% { transform: scale(1) translateY(0); }
+}
+.obs-diamond-enter {
+  animation: obs-diamond-enter 0.65s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+
+/* Gold border shimmer */
+@keyframes gold-shimmer {
+  0%   { box-shadow: 0 0 0px 0px rgba(245,184,0,0); }
+  30%  { box-shadow: 0 0 18px 4px rgba(245,184,0,0.55); }
+  70%  { box-shadow: 0 0 24px 6px rgba(245,184,0,0.40); }
+  100% { box-shadow: 0 0 12px 3px rgba(245,184,0,0.20); }
+}
+.obs-gold-glow {
+  animation: gold-shimmer 0.8s ease-out forwards;
+}
+
+/* Diamond rainbow border */
+@keyframes diamond-border {
+  0%   { border-color: #F5B800; box-shadow: 0 0 28px 8px rgba(245,184,0,0.6); }
+  25%  { border-color: #FF4ECD; box-shadow: 0 0 28px 8px rgba(255,78,205,0.5); }
+  50%  { border-color: #00D4FF; box-shadow: 0 0 28px 8px rgba(0,212,255,0.5); }
+  75%  { border-color: #7B61FF; box-shadow: 0 0 28px 8px rgba(123,97,255,0.5); }
+  100% { border-color: #F5B800; box-shadow: 0 0 20px 5px rgba(245,184,0,0.35); }
+}
+.obs-diamond-border {
+  animation: diamond-border 1.5s ease-in-out infinite alternate;
+}
+
+/* Progress drainer bar */
+@keyframes drain-progress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+.obs-progress-drain {
+  transform-origin: left;
+  animation: drain-progress var(--drain-duration, 5s) linear forwards;
+}
+
+/* Floating particles for diamond tier */
+@keyframes float-particle {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-60px) scale(0.4); }
+}
+.obs-particle {
+  animation: float-particle var(--particle-dur, 1.2s) ease-out forwards;
+}
