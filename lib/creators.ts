@@ -29,6 +29,10 @@ export async function loadPublicCreator(rawUsername: string): Promise<CreatorLoa
       }
 
       if (!data) {
+        // Fall back to demo creator for the reserved "demo" username
+        if (username === DEMO_USERNAME) {
+          return { status: "demo", creator: demoCreator };
+        }
         return { status: "not_found" };
       }
 

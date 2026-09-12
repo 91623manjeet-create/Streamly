@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -24,6 +25,15 @@ export function OnboardingWizard({
     claimUsernameAction,
     { error: null, success: false }
   );
+
+  const router = useRouter();
+
+  // Redirect to dashboard after successful claim
+  useEffect(() => {
+    if (state.success) {
+      router.push("/dashboard");
+    }
+  }, [state.success, router]);
 
   const usernameError = username ? validateUsername(username) : null;
   const isHandleValid = username.length >= 3 && !usernameError;

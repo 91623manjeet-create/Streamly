@@ -42,6 +42,7 @@ export async function claimUsernameAction(
   }
 
   const { error } = await supabase.from("creators").insert({
+    user_id: user.id,
     username,
     display_name: displayName,
     bio: bio || null,

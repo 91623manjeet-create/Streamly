@@ -42,8 +42,8 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  const { data } = await supabase.auth.getClaims();
-  const isAuthenticated = Boolean(data?.claims);
+  const { data: { user } } = await supabase.auth.getUser();
+  const isAuthenticated = Boolean(user);
 
   if (!isAuthenticated && request.nextUrl.pathname.startsWith("/dashboard")) {
     const redirectUrl = request.nextUrl.clone();

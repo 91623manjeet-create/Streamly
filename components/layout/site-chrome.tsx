@@ -5,7 +5,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/#how-it-works", label: "How it works" },
   { href: "/#features", label: "Features" },
-  { href: "/#obs", label: "OBS Overlay" },
+  { href: "/#features", label: "OBS Overlay" },
 ];
 
 export function SiteHeader() {
@@ -70,7 +70,7 @@ export function SiteFooter() {
             <Link href="/#how-it-works" className="hover:text-[#F4F4F5] transition-colors">
               How it works
             </Link>
-            <Link href="/#obs" className="hover:text-[#F4F4F5] transition-colors">
+            <Link href="/#features" className="hover:text-[#F4F4F5] transition-colors">
               OBS Overlay
             </Link>
             <Link href="/dashboard" className="hover:text-[#F4F4F5] transition-colors">
