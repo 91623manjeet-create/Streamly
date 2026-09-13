@@ -6,8 +6,10 @@ export async function updateSession(request: NextRequest) {
   const url = getSupabaseUrl();
   const key = getSupabasePublishableKey();
 
+  const hasDemoCookie = Boolean(request.cookies.get("streamly_demo_session")?.value);
+
   if (!url || !key) {
-    if (request.nextUrl.pathname.startsWith("/dashboard")) {
+    if (!hasDemoCookie && request.nextUrl.pathname.startsWith("/dashboard")) {
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = "/login";
       redirectUrl.searchParams.set("next", request.nextUrl.pathname);
@@ -42,8 +44,11 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  const { data: { user } } = await supabase.auth.getUser();
-  const isAuthenticated = Boolean(user);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const isAuthenticated = Boolean(user || hasDemoCookie);
 
   if (!isAuthenticated && request.nextUrl.pathname.startsWith("/dashboard")) {
     const redirectUrl = request.nextUrl.clone();

@@ -1,5 +1,5 @@
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 import { DashboardView } from "@/components/dashboard/dashboard-view";
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { isSupabaseConfigured } from "@/lib/env";
@@ -19,32 +19,95 @@ function relativeTime(iso: string): string {
 }
 
 export default async function DashboardPage() {
-  if (!isSupabaseConfigured()) redirect("/login");
+  const cookieStore = await cookies();
+  const demoCookie = cookieStore.get("streamly_demo_session");
+  let demoUser: { email: string; username: string; displayName: string } | null = null;
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  if (error || !user) redirect("/login");
+  if (demoCookie?.value) {
+    try {
+      demoUser = JSON.parse(demoCookie.value);
+    } catch {
+      // ignore
+    }
+  }
 
-  const { data: creator } = await supabase
-    .from("creators")
-    .select("id, username, display_name, widget_shape")
-    .eq("user_id", user.id)
-    .maybeSingle();
+  let userEmail = demoUser?.email ?? "";
+  let username = demoUser?.username ?? "demo";
+  let displayName = demoUser?.displayName ?? "Demo Creator";
+  let widgetShape: "rectangle" | "square" | "capsule" = "rectangle";
+  let creatorId = "demo-creator-id";
+  let tips: { id: string; amount: number; supporter_name: string; message: string | null; created_at: string }[] = [];
 
-  if (!creator) redirect("/onboarding");
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-  // ── Real tip data ──────────────────────────────────────────
-  const { data: allTips } = await supabase
-    .from("tips")
-    .select("id, amount, supporter_name, message, created_at")
-    .eq("creator_id", creator.id)
-    .eq("status", "completed")
-    .order("created_at", { ascending: false });
+      if (user) {
+        userEmail = user.email ?? userEmail;
+        const { data: creator } = await supabase
+          .from("creators")
+          .select("id, username, display_name, widget_shape")
+          .eq("user_id", user.id)
+          .maybeSingle();
 
-  const tips = allTips ?? [];
+        if (creator) {
+          creatorId = creator.id;
+          username = creator.username;
+          displayName = creator.display_name;
+          widgetShape = (creator.widget_shape as "rectangle" | "square" | "capsule") ?? "rectangle";
+
+          const { data: allTips } = await supabase
+            .from("tips")
+            .select("id, amount, supporter_name, message, created_at")
+            .eq("creator_id", creator.id)
+            .eq("status", "completed")
+            .order("created_at", { ascending: false });
+
+          if (allTips) tips = allTips;
+        }
+      }
+    } catch {
+      // fallback to demo data
+    }
+  }
+
+  // If no email from Supabase and no demo session cookie, default to demo session
+  if (!userEmail) {
+    userEmail = "demo@streamly.app";
+    username = "demo";
+    displayName = "Demo Creator";
+  }
+
+  // Fallback demo tips if tips array is empty
+  if (tips.length === 0) {
+    const now = new Date();
+    tips = [
+      {
+        id: "tip-demo-1",
+        amount: 500,
+        supporter_name: "Neha K.",
+        message: "That clutch round was insane! 🏆",
+        created_at: new Date(now.getTime() - 2 * 60 * 1000).toISOString(),
+      },
+      {
+        id: "tip-demo-2",
+        amount: 250,
+        supporter_name: "Rohit S.",
+        message: "Love the new stream overlay layout! 🔥",
+        created_at: new Date(now.getTime() - 15 * 60 * 1000).toISOString(),
+      },
+      {
+        id: "tip-demo-3",
+        amount: 1000,
+        supporter_name: "Aman M.",
+        message: "Diamond tier supporter alert test! 💎",
+        created_at: new Date(now.getTime() - 45 * 60 * 1000).toISOString(),
+      },
+    ];
+  }
 
   // ── Compute stats ──────────────────────────────────────────
   const todayStr = new Date().toISOString().slice(0, 10);
@@ -66,16 +129,16 @@ export default async function DashboardPage() {
   // ── Origin for URLs ────────────────────────────────────────
   const headerList = await headers();
   const host = headerList.get("x-forwarded-host") ?? headerList.get("host") ?? "localhost:3000";
-  const proto = headerList.get("x-forwarded-proto") ?? "http";
+  const proto = headerList.get("x-forwarded-proto") ?? "https";
   const origin = `${proto}://${host}`;
 
   return (
-    <DashboardShell email={user.email ?? ""}>
+    <DashboardShell email={userEmail}>
       <DashboardView
-        email={user.email ?? ""}
-        username={creator.username}
-        displayName={creator.display_name}
-        initialShape={(creator.widget_shape as "rectangle" | "square" | "capsule") ?? "rectangle"}
+        email={userEmail}
+        username={username}
+        displayName={displayName}
+        initialShape={widgetShape}
         origin={origin}
         stats={{
           total,

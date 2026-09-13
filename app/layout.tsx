@@ -16,16 +16,19 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   title: {
-    default: "Streamly",
+    default: "Streamly — Live Creator Engagement Infrastructure",
     template: "%s · Streamly",
   },
-  description: "Accept tips. Engage your audience. Grow your community.",
+  description: "Accept tips, trigger real-time OBS alerts, and elevate your livestream community.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${geist.variable} ${fraunces.variable} h-full antialiased`}>
-      <body className="min-h-full bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-zinc-100 transition-colors duration-300">
+    <html lang="en" className={`${geist.variable} ${fraunces.variable} h-full antialiased dark`}>
+      <body className="min-h-full bg-[#09090B] text-[#F4F4F5] transition-colors duration-300 font-sans">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

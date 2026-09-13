@@ -62,19 +62,19 @@ export async function DashboardView({
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#232326] pb-6">
         <div>
-          <h1 className="font-sans text-2xl font-semibold text-[#F4F4F5]">{greet(displayName)}</h1>
+          <h1 className="font-sans text-2xl font-bold text-[#F4F4F5]">{greet(displayName)}</h1>
           <p className="mt-1 text-xs text-[#A1A1AA]">
             Here&apos;s what&apos;s happening with your Streamly account ({email}).
           </p>
         </div>
-        <Badge variant="amber">● OVERLAY ACTIVE</Badge>
+        <Badge variant="indigo" pulse>● OVERLAY ACTIVE</Badge>
       </div>
 
       {/* 4 Metric Cards — real data */}
       <div className="grid gap-4 sm:grid-cols-4">
-        <Card className="p-4">
+        <Card className="p-4 border-[#312E81]/30">
           <p className="text-[11px] font-medium text-[#71717A] uppercase tracking-wider">Total Earned</p>
-          <p className="mt-1.5 font-sans text-2xl font-semibold text-[#F4F4F5]">
+          <p className="mt-1.5 font-sans text-2xl font-bold text-[#818CF8]">
             {stats.total > 0 ? formatInr(stats.total) : "—"}
           </p>
           <p className="mt-1 text-[11px] text-[#71717A]">
@@ -84,7 +84,7 @@ export async function DashboardView({
 
         <Card className="p-4">
           <p className="text-[11px] font-medium text-[#71717A] uppercase tracking-wider">Today</p>
-          <p className="mt-1.5 font-sans text-2xl font-semibold text-[#F4F4F5]">
+          <p className="mt-1.5 font-sans text-2xl font-bold text-[#F4F4F5]">
             {stats.today > 0 ? formatInr(stats.today) : "—"}
           </p>
           <p className="mt-1 text-[11px] text-[#71717A]">
@@ -94,7 +94,7 @@ export async function DashboardView({
 
         <Card className="p-4">
           <p className="text-[11px] font-medium text-[#71717A] uppercase tracking-wider">Supporters</p>
-          <p className="mt-1.5 font-sans text-2xl font-semibold text-[#F4F4F5]">
+          <p className="mt-1.5 font-sans text-2xl font-bold text-[#F4F4F5]">
             {stats.supporters > 0 ? stats.supporters : "—"}
           </p>
           <p className="mt-1 text-[11px] text-[#71717A]">
@@ -104,7 +104,7 @@ export async function DashboardView({
 
         <Card className="p-4">
           <p className="text-[11px] font-medium text-[#71717A] uppercase tracking-wider">Avg Tip</p>
-          <p className="mt-1.5 font-sans text-2xl font-semibold text-[#F4F4F5]">
+          <p className="mt-1.5 font-sans text-2xl font-bold text-[#F4F4F5]">
             {stats.avgTip > 0 ? formatInr(stats.avgTip) : "—"}
           </p>
           <p className="mt-1 text-[11px] text-[#71717A]">Per transaction</p>

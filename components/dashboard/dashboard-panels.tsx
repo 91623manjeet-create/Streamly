@@ -14,19 +14,19 @@ export function AlertPipelinePanel() {
     <Card className="p-6">
       <div className="flex items-center justify-between border-b border-[#232326] pb-4">
         <div>
-          <h2 className="text-base font-medium text-[#F4F4F5]">Alert pipeline</h2>
+          <h2 className="text-base font-semibold text-[#F4F4F5]">Alert pipeline</h2>
           <p className="text-xs text-[#71717A] mt-0.5">
             How Streamly delivers tips to your OBS overlay in real-time.
           </p>
         </div>
-        <Badge variant="amber">● LATENCY: 38ms</Badge>
+        <Badge variant="indigo">● LATENCY: 38ms</Badge>
       </div>
 
       <div className="mt-6 grid grid-cols-3 gap-4">
         {[
           { label: "Tip received", sub: "Payment verified", color: "#22C55E" },
-          { label: "Realtime event", sub: "Supabase WebSocket", color: "#F5B800" },
-          { label: "OBS delivered", sub: "Browser source updated", color: "#F5B800" },
+          { label: "Realtime event", sub: "Supabase WebSocket", color: "#6366F1" },
+          { label: "OBS delivered", sub: "Browser source updated", color: "#818CF8" },
         ].map(({ label, sub, color }) => (
           <div key={label} className="flex items-start gap-3">
             <span className="mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: color }} />
@@ -56,9 +56,9 @@ export function TestAlertPanel() {
   };
 
   function getTierColor(amt: number) {
-    if (amt >= 1000) return "#00D4FF";
-    if (amt >= 500) return "#F5B800";
-    if (amt >= 100) return "#A1A1AA";
+    if (amt >= 1000) return "#38BDF8";
+    if (amt >= 500) return "#6366F1";
+    if (amt >= 100) return "#818CF8";
     return "#CD7F32";
   }
 
@@ -66,10 +66,10 @@ export function TestAlertPanel() {
     <Card className="p-6 space-y-4">
       <div className="flex items-center justify-between border-b border-[#232326] pb-3">
         <div>
-          <h3 className="text-sm font-medium text-[#F4F4F5]">Test alert</h3>
+          <h3 className="text-sm font-semibold text-[#F4F4F5]">Test alert</h3>
           <p className="text-[11px] text-[#71717A] mt-0.5">Fire a test to your OBS overlay.</p>
         </div>
-        {sent && <span className="text-xs text-[#22C55E]">✓ Alert fired to OBS</span>}
+        {sent && <span className="text-xs font-medium text-[#22C55E]">✓ Alert fired to OBS</span>}
       </div>
 
       <div>
@@ -138,9 +138,9 @@ const SHAPES: { id: OverlayShape; label: string; icon: string; desc: string }[] 
 
 const TIER_GUIDE = [
   { emoji: "🎯", name: "Bronze", range: "₹1–99",   color: "#CD7F32", dur: "10s min" },
-  { emoji: "⚡", name: "Silver", range: "₹100–499", color: "#A1A1AA", dur: "50s for ₹100" },
-  { emoji: "🏆", name: "Gold",   range: "₹500–999", color: "#F5B800", dur: "4m for ₹500" },
-  { emoji: "💎", name: "Diamond", range: "₹1000+",  color: "#00D4FF", dur: "8m+ for ₹1000" },
+  { emoji: "⚡", name: "Silver", range: "₹100–499", color: "#818CF8", dur: "50s for ₹100" },
+  { emoji: "🏆", name: "Gold",   range: "₹500–999", color: "#6366F1", dur: "4m for ₹500" },
+  { emoji: "💎", name: "Diamond", range: "₹1000+",  color: "#38BDF8", dur: "8m+ for ₹1000" },
 ];
 
 export function OverlaySettingsPanel({
@@ -191,7 +191,7 @@ export function OverlaySettingsPanel({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-[#232326] pb-4">
         <div>
-          <h2 className="text-sm font-medium text-[#F4F4F5]">OBS Overlay Settings</h2>
+          <h2 className="text-sm font-semibold text-[#F4F4F5]">OBS Overlay Settings</h2>
           <p className="text-xs text-[#71717A] mt-0.5">
             Pick your default widget shape. Saved preferences apply automatically to your OBS source.
           </p>
@@ -200,7 +200,7 @@ export function OverlaySettingsPanel({
           {saveMessage && (
             <span className="text-xs font-medium text-[#22C55E] animate-fade-in">{saveMessage}</span>
           )}
-          <Badge variant="amber">● LIVE</Badge>
+          <Badge variant="indigo">● LIVE</Badge>
         </div>
       </div>
 
@@ -219,16 +219,16 @@ export function OverlaySettingsPanel({
                 className="relative rounded-xl border p-4 text-left transition-all duration-150 cursor-pointer disabled:opacity-70"
                 style={
                   active
-                    ? { borderColor: "#F5B800", background: "#F5B80010" }
+                    ? { borderColor: "#6366F1", background: "rgba(99, 102, 241, 0.1)" }
                     : { borderColor: "#232326", background: "#0F0F12" }
                 }
               >
                 {active && (
-                  <span className="absolute top-2.5 right-2.5 text-[10px] font-mono text-[#F5B800]">✓ ACTIVE</span>
+                  <span className="absolute top-2.5 right-2.5 text-[10px] font-mono text-[#818CF8] font-bold">✓ ACTIVE</span>
                 )}
                 <span
                   className="block text-xl mb-2"
-                  style={{ color: active ? "#F5B800" : "#52525B" }}
+                  style={{ color: active ? "#818CF8" : "#52525B" }}
                 >
                   {icon}
                 </span>
@@ -241,12 +241,12 @@ export function OverlaySettingsPanel({
       </div>
 
       {/* Interactive Preview Window Link */}
-      <div className="rounded-xl border border-[#232326] bg-[#0F0F12] p-4 space-y-3">
+      <div className="rounded-xl border border-[#312E81]/40 bg-[#0F0F12] p-4 space-y-3">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold text-[#F4F4F5]">Interactive Preview Window</p>
             <p className="text-[10px] text-[#71717A] mt-0.5">
-              Launch a live pop-up preview window to test shapes, 2-phase expanding alerts, and animations.
+              Launch a live pop-up preview window to test shapes, expanding alerts, and animations.
             </p>
           </div>
           <Button
@@ -283,7 +283,7 @@ export function OverlaySettingsPanel({
           <Input
             readOnly
             value={overlayUrl}
-            className="font-mono text-xs text-[#F5B800]"
+            className="font-mono text-xs text-[#818CF8]"
           />
           <Button
             variant="secondary"
@@ -295,7 +295,7 @@ export function OverlaySettingsPanel({
           </Button>
         </div>
         <p className="text-[10px] text-[#71717A] mt-1.5">
-          Paste <code className="text-[#F5B800] font-mono">{overlayUrl}</code> into OBS. It automatically uses your saved shape preference (<span className="text-[#F4F4F5] capitalize">{shape}</span>).
+          Paste <code className="text-[#818CF8] font-mono">{overlayUrl}</code> into OBS. It automatically uses your saved shape preference (<span className="text-[#F4F4F5] capitalize">{shape}</span>).
         </p>
       </div>
 
@@ -323,7 +323,7 @@ export function OverlaySettingsPanel({
 
       {/* Tier guide */}
       <div>
-        <p className="text-xs font-medium text-[#A1A1AA] mb-3">Alert tiers &amp; duration formula</p>
+        <p className="text-xs font-semibold text-[#A1A1AA] mb-3">Alert tiers &amp; duration formula</p>
         <p className="text-[10px] text-[#71717A] mb-3">
           Duration = <span className="text-[#F4F4F5] font-mono">max(10s, amount ÷ 2)</span>. ₹2 = 1 second on screen.
         </p>
@@ -359,7 +359,7 @@ export function DashboardLinks({
 
   return (
     <Card className="p-6 space-y-4">
-      <h2 className="text-sm font-medium text-[#F4F4F5]">Share your tip page</h2>
+      <h2 className="text-sm font-semibold text-[#F4F4F5]">Share your tip page</h2>
       <div>
         <Label>Public Tip Page</Label>
         <div className="flex gap-2 mt-1">
@@ -399,12 +399,12 @@ export function SettingsPreview({
     <Card id="settings" className="p-6">
       <div className="flex items-center justify-between border-b border-[#232326] pb-4 mb-4">
         <div>
-          <h2 className="text-sm font-medium text-[#F4F4F5]">Creator preferences</h2>
+          <h2 className="text-sm font-semibold text-[#F4F4F5]">Creator preferences</h2>
           <p className="text-xs text-[#71717A] mt-0.5">
             Update your profile and tip threshold.
           </p>
         </div>
-        {saved && <span className="text-xs text-[#22C55E]">Saved ✓</span>}
+        {saved && <span className="text-xs font-medium text-[#22C55E]">Saved ✓</span>}
       </div>
 
       <form onSubmit={handleSave} className="space-y-4">

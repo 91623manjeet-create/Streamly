@@ -28,10 +28,10 @@ export function OnboardingWizard({
 
   const router = useRouter();
 
-  // Redirect to dashboard after successful claim
+  // Redirect to dashboard immediately after successful claim
   useEffect(() => {
     if (state.success) {
-      router.push("/dashboard");
+      window.location.href = "/dashboard";
     }
   }, [state.success, router]);
 
@@ -42,10 +42,10 @@ export function OnboardingWizard({
     <div className="mx-auto w-full max-w-md space-y-6">
       {/* Onboarding Header */}
       <div className="text-center">
-        <Badge variant="amber" className="mb-3">
+        <Badge variant="indigo" className="mb-3 py-1 px-3">
           STEP {step} OF 2
         </Badge>
-        <h1 className="font-sans text-2xl font-semibold text-[#F4F4F5]">
+        <h1 className="font-sans text-2xl font-bold text-[#F4F4F5]">
           {step === 1 ? "Create your creator profile" : "Choose your handle"}
         </h1>
         <p className="mt-1 text-xs text-[#A1A1AA]">
@@ -55,7 +55,7 @@ export function OnboardingWizard({
         </p>
       </div>
 
-      <Card className="p-6">
+      <Card className="p-6 border-[#312E81]/30">
         {step === 1 ? (
           /* Step 1: Create Creator Profile */
           <div className="space-y-4">
@@ -121,11 +121,11 @@ export function OnboardingWizard({
 
             {/* Live Link Preview */}
             <div className="rounded-lg border border-[#232326] bg-[#141417] p-3 space-y-2">
-              <span className="text-[10px] font-mono text-[#71717A] uppercase tracking-wider">Live Link Preview</span>
+              <span className="text-[10px] font-mono text-[#818CF8] uppercase tracking-wider font-semibold">Live Link Preview</span>
               <div className="text-xs space-y-1">
                 <div className="flex justify-between items-center">
                   <span className="text-[#A1A1AA]">Tip Page:</span>
-                  <code className="text-[#F5B800] font-mono">
+                  <code className="text-[#818CF8] font-mono">
                     {origin}/tip/{username || "username"}
                   </code>
                 </div>

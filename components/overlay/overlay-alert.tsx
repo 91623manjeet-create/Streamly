@@ -38,7 +38,7 @@ function getTier(amount: number): Tier {
       emoji: "💎",
       enterClass: "obs-diamond-enter",
       borderClass: "obs-diamond-border",
-      badgeColor: "#00D4FF",
+      badgeColor: "#38BDF8",
       showParticles: true,
     };
   }
@@ -48,7 +48,7 @@ function getTier(amount: number): Tier {
       emoji: "🏆",
       enterClass: "obs-gold-enter",
       borderClass: "obs-gold-glow",
-      badgeColor: "#F5B800",
+      badgeColor: "#6366F1",
       glowClass: "obs-gold-glow",
     };
   }
@@ -58,7 +58,7 @@ function getTier(amount: number): Tier {
       emoji: "⚡",
       enterClass: "obs-silver-enter",
       borderClass: "",
-      badgeColor: "#A1A1AA",
+      badgeColor: "#818CF8",
     };
   }
   return {
@@ -103,7 +103,6 @@ function getShapeClasses(shape: OverlayShape) {
 
 // ─── Particles Component (Diamond tier) ───────────────────────
 const PARTICLE_EMOJIS = ["💎", "✨", "⭐", "🌟", "💫"];
-// Fixed particle durations — deterministic to avoid impure render calls
 const PARTICLE_DURS = ["0.85s", "1.10s", "0.90s", "1.30s", "0.75s", "1.20s", "0.95s", "1.15s"];
 
 function DiamondParticles({ active }: { active: boolean }) {
@@ -310,9 +309,9 @@ export function OverlayAlert({ creator, shape = "rectangle", isPreview = false }
 
       {/* ── Interactive Preview Bar (when opened in preview mode or standalone browser) ── */}
       {(isPreview || !currentAlert) && (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-full border border-[#232326] bg-[#09090B]/95 px-4 py-2.5 text-xs backdrop-blur-md shadow-2xl transition-all">
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-full border border-[#312E81]/50 bg-[#09090B]/95 px-4 py-2.5 text-xs backdrop-blur-md shadow-2xl transition-all">
           <span className="flex h-2.5 w-2.5 shrink-0 rounded-full bg-[#22C55E] animate-pulse" />
-          <span className="font-medium text-[#F4F4F5]">
+          <span className="font-semibold text-[#F4F4F5]">
             {isPreview ? "Interactive Preview Mode" : "Streamly Overlay Active"}
           </span>
           <span className="text-[#3F3F46]">|</span>
@@ -324,10 +323,10 @@ export function OverlayAlert({ creator, shape = "rectangle", isPreview = false }
                 key={s}
                 type="button"
                 onClick={() => setActiveShape(s)}
-                className="px-2 py-0.5 rounded-full text-[10px] font-mono capitalize transition-colors"
+                className="px-2.5 py-0.5 rounded-full text-[10px] font-mono capitalize transition-colors"
                 style={
                   activeShape === s
-                    ? { background: "#F5B800", color: "#000", fontWeight: 600 }
+                    ? { background: "#6366F1", color: "#FFFFFF", fontWeight: 600 }
                     : { color: "#71717A" }
                 }
               >
@@ -346,10 +345,10 @@ export function OverlayAlert({ creator, shape = "rectangle", isPreview = false }
                 id: `test-demo-${Date.now()}`,
                 supporter: "Manjeet",
                 amount: 500,
-                message: "Bhai Streamly 2-phase expanding alert test! 🔥",
+                message: "Streamly 2-phase expanding alert test! 🔥",
               })
             }
-            className="rounded-full bg-[#F5B800] px-3 py-1 text-[11px] font-semibold text-black hover:bg-[#E5AC00] transition-colors shrink-0"
+            className="rounded-full bg-[#6366F1] px-3 py-1 text-[11px] font-semibold text-white hover:bg-[#4F46E5] transition-colors shrink-0 shadow-xs"
           >
             ⚡ Test ₹500 Alert
           </button>
@@ -364,7 +363,7 @@ export function OverlayAlert({ creator, shape = "rectangle", isPreview = false }
         >
           <div
             className={`relative border bg-[#0F0F12] shadow-2xl backdrop-blur-md overflow-hidden transition-all duration-300 ${shapeConfig.card} ${isGold ? tier.borderClass : ""} ${isDiamond ? tier.borderClass : ""} ${!isGold && !isDiamond ? "border-[#232326]" : ""}`}
-            style={!isGold && !isDiamond ? {} : isGold ? { borderColor: "#F5B800" } : {}}
+            style={!isGold && !isDiamond ? {} : isGold ? { borderColor: "#6366F1" } : {}}
           >
             {/* Diamond floating particles */}
             {isDiamond && <DiamondParticles active={visible} />}

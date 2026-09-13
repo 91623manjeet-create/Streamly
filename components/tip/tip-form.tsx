@@ -151,7 +151,7 @@ export function TipForm({ creator }: { creator: PublicCreator }) {
             email: supporterEmail.trim(),
           },
           theme: {
-            color: "#F5B800",
+            color: "#6366F1",
           },
           modal: {
             ondismiss: function () {
@@ -188,20 +188,20 @@ export function TipForm({ creator }: { creator: PublicCreator }) {
           ✓
         </div>
         <div>
-          <h2 className="font-sans text-xl font-semibold text-[#F4F4F5]">Thank you for supporting!</h2>
+          <h2 className="font-sans text-xl font-bold text-[#F4F4F5]">Thank you for supporting!</h2>
           <p className="text-xs text-[#A1A1AA] mt-1">
-            Sent <span className="font-medium text-[#F5B800]">₹{confirmedTip.amount}</span> to {creator.display_name}.
+            Sent <span className="font-bold text-[#818CF8]">₹{confirmedTip.amount}</span> to {creator.display_name}.
           </p>
           <p className="text-[11px] text-[#71717A] mt-0.5">
             Payment receipt sent to <span className="text-[#A1A1AA]">{confirmedTip.supporterEmail}</span>.
           </p>
         </div>
 
-        <div className="rounded-lg border border-[#232326] bg-[#141417] p-3 text-left">
-          <p className="text-[10px] font-mono text-[#F5B800] uppercase tracking-wider mb-1">Live OBS Alert Dispatched</p>
+        <div className="rounded-lg border border-[#312E81]/30 bg-[#141417] p-3 text-left">
+          <p className="text-[10px] font-mono text-[#818CF8] uppercase tracking-wider mb-1 font-semibold">Live OBS Alert Dispatched</p>
           <div className="flex items-center justify-between text-xs">
             <span className="font-medium text-[#F4F4F5]">{confirmedTip.supporterName}</span>
-            <span className="font-medium text-[#F5B800]">₹{confirmedTip.amount}</span>
+            <span className="font-bold text-[#818CF8]">₹{confirmedTip.amount}</span>
           </div>
           {confirmedTip.message && <p className="text-xs text-[#A1A1AA] mt-1 italic">&quot;{confirmedTip.message}&quot;</p>}
         </div>
@@ -224,7 +224,7 @@ export function TipForm({ creator }: { creator: PublicCreator }) {
               type="checkbox"
               checked={isAnonymous}
               onChange={(e) => setIsAnonymous(e.target.checked)}
-              className="rounded border-[#232326] bg-[#141417] text-[#F5B800] focus:ring-0"
+              className="rounded border-[#232326] bg-[#141417] text-[#6366F1] focus:ring-0"
             />
             <span>Send anonymously</span>
           </label>
@@ -266,10 +266,10 @@ export function TipForm({ creator }: { creator: PublicCreator }) {
                   setAmount(value);
                   setCustom("");
                 }}
-                className={`h-10 rounded-lg border text-xs font-medium transition-colors ${
+                className={`h-10 rounded-lg border text-xs font-semibold transition-all ${
                   isSelected
-                    ? "border-[#F5B800] bg-[#141417] text-[#F5B800]"
-                    : "border-[#232326] bg-[#0F0F12] text-[#A1A1AA] hover:border-[#2E2E33]"
+                    ? "border-[#6366F1] bg-[#6366F1]/10 text-[#818CF8] shadow-xs"
+                    : "border-[#232326] bg-[#0F0F12] text-[#A1A1AA] hover:border-[#312E81]"
                 }`}
               >
                 ₹{value}

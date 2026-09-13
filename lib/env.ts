@@ -4,7 +4,9 @@ export function getSupabaseUrl(): string | undefined {
 }
 
 export function getSupabasePublishableKey(): string | undefined {
-  const value = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
+  const value =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim() ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
   return value ? value : undefined;
 }
 

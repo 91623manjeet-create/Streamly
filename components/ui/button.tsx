@@ -7,9 +7,9 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variants: Record<NonNullable<ButtonProps["variant"]>, string> = {
   primary:
-    "bg-[#F5B800] text-[#09090B] hover:bg-[#DFA500] active:scale-[0.99] font-medium shadow-xs disabled:bg-[#232326] disabled:text-[#52525B]",
+    "bg-[#6366F1] text-white hover:bg-[#4F46E5] active:scale-[0.99] font-medium shadow-md shadow-[#6366F1]/20 disabled:bg-[#232326] disabled:text-[#52525B]",
   secondary:
-    "border border-[#232326] bg-[#141417] text-[#F4F4F5] hover:bg-[#1B1B1F] hover:border-[#2E2E33] active:scale-[0.99] shadow-xs disabled:opacity-50",
+    "border border-[#232326] bg-[#141417] text-[#F4F4F5] hover:bg-[#1B1B1F] hover:border-[#312E81] active:scale-[0.99] shadow-xs disabled:opacity-50",
   ghost:
     "text-[#A1A1AA] hover:bg-[#141417] hover:text-[#F4F4F5] active:scale-[0.99]",
   destructive:
@@ -32,7 +32,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={`inline-flex items-center justify-center gap-2 font-sans transition-all duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5B800] disabled:cursor-not-allowed disabled:transform-none ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 font-sans transition-all duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6366F1] disabled:cursor-not-allowed disabled:transform-none ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     />
   );
