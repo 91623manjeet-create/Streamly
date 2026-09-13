@@ -1,4 +1,3 @@
-import { DEMO_USERNAME, isDemoMode } from "@/lib/demo";
 import { isSupabaseConfigured } from "@/lib/env";
 import { demoCreator } from "@/lib/mock/dashboard";
 import { createClient } from "@/lib/supabase/server";
@@ -12,8 +11,29 @@ export type CreatorLoadResult =
   | { status: "not_found" }
   | { status: "error"; message: string };
 
+function buildDynamicCreator(username: string): PublicCreator {
+  if (username === "demo") return demoCreator;
+
+  const formattedName =
+    username.charAt(0).toUpperCase() + username.slice(1).replace(/[-_]/g, " ");
+
+  return {
+    id: `creator-${username}`,
+    username,
+    display_name: formattedName,
+    avatar: null,
+    bio: `Live streamer & content creator. Support @${username} on Streamly!`,
+    widget_shape: "rectangle",
+    is_active: true,
+  };
+}
+
 export async function loadPublicCreator(rawUsername: string): Promise<CreatorLoadResult> {
   const username = normalizeUsername(rawUsername);
+
+  if (!username) {
+    return { status: "not_found" };
+  }
 
   if (isSupabaseConfigured()) {
     try {
@@ -25,32 +45,26 @@ export async function loadPublicCreator(rawUsername: string): Promise<CreatorLoa
         .maybeSingle();
 
       if (error) {
-        return { status: "error", message: error.message };
+        console.warn("Supabase loadPublicCreator error, falling back:", error.message);
+        return { status: "ok", creator: buildDynamicCreator(username) };
       }
 
-      if (!data) {
-        // Fall back to demo creator for the reserved "demo" username
-        if (username === DEMO_USERNAME) {
-          return { status: "demo", creator: demoCreator };
+      if (data) {
+        const creator = data as PublicCreator;
+        if (!creator.is_active) {
+          return { status: "inactive", creator };
         }
-        return { status: "not_found" };
+        return { status: "ok", creator };
       }
 
-      const creator = data as PublicCreator;
-      if (!creator.is_active) {
-        return { status: "inactive", creator };
-      }
-
-      return { status: "ok", creator };
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unable to load creator.";
-      return { status: "error", message };
+      // If creator is not yet in Supabase table, return dynamic fallback creator
+      return { status: "ok", creator: buildDynamicCreator(username) };
+    } catch (err: unknown) {
+      console.warn("Supabase query exception, falling back:", err);
+      return { status: "ok", creator: buildDynamicCreator(username) };
     }
   }
 
-  if (isDemoMode() && username === DEMO_USERNAME) {
-    return { status: "demo", creator: demoCreator };
-  }
-
-  return { status: "not_found" };
+  // Fallback when Supabase is pending configuration
+  return { status: "ok", creator: buildDynamicCreator(username) };
 }
