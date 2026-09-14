@@ -31,7 +31,7 @@ export function OnboardingWizard({
   // Redirect to dashboard immediately after successful claim
   useEffect(() => {
     if (state.success) {
-      window.location.href = "/dashboard";
+      router.push("/dashboard");
     }
   }, [state.success, router]);
 

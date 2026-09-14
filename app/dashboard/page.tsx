@@ -1,5 +1,4 @@
 import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { DashboardView } from "@/components/dashboard/dashboard-view";
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { isSupabaseConfigured } from "@/lib/env";
@@ -35,7 +34,6 @@ export default async function DashboardPage() {
   let username = demoUser?.username ?? "demo";
   let displayName = demoUser?.displayName ?? "Demo Creator";
   let widgetShape: "rectangle" | "square" | "capsule" = "rectangle";
-  let creatorId = "demo-creator-id";
   let tips: { id: string; amount: number; supporter_name: string; message: string | null; created_at: string }[] = [];
 
   if (isSupabaseConfigured()) {
@@ -54,7 +52,6 @@ export default async function DashboardPage() {
           .maybeSingle();
 
         if (creator) {
-          creatorId = creator.id;
           username = creator.username;
           displayName = creator.display_name;
           widgetShape = (creator.widget_shape as "rectangle" | "square" | "capsule") ?? "rectangle";
