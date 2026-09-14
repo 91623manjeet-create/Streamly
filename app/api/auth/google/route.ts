@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { isSupabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
-export async function GET(request: Request) {
+export async function GET() {
   const cookieStore = await cookies();
   const headerList = await headers();
   const host = headerList.get("x-forwarded-host") ?? headerList.get("host") ?? "localhost:3000";
@@ -56,6 +56,6 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
-  return GET(request);
+export async function POST() {
+  return GET();
 }
